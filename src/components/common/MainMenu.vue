@@ -7,7 +7,7 @@ import { RouterLink } from 'vue-router'
       <div class="main-menu-content">
         <RouterLink to="/" class="navigation-brand d-none d-md-block d-lg-block d-xl-block"><img class="brand-logo" alt="CryptoDash admin logo" src="/src/assets/app-assets/images/logo/logo.png"/></RouterLink>
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-          <li class="active">
+          <li class="nav-item">
             <RouterLink to="/"><i class="icon-grid"></i><span class="menu-title" data-i18n="">Dashboard</span></RouterLink>
           </li>
           <li class="nav-item">

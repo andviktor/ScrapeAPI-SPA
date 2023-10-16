@@ -484,7 +484,7 @@
         })
         .on("open.app.menu", "li", function (e) {
           var $listItem = $(this);
-          $listItem.addClass("open");
+          //$listItem.addClass("open");
 
           menuObj.expand($listItem);
 
