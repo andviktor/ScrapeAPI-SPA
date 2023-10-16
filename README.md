@@ -1,6 +1,6 @@
 # scrapeapi
 
-This template should help get you started developing with Vue 3 in Vite.
+Your all-in-one web scraping solution, enabling you to scrape data from any website and receive it in a custom API format, simplifying data extraction like never before.
 
 ## Recommended IDE Setup
 
