@@ -86,7 +86,7 @@ define(function (require) {
 
         // command string
         var cs = data.replace(/-/g, ' -')
-            .replace(/  /g, ' ')
+            .replace(/ {2}/g, ' ')
             .replace(/ /g, ',')
             .replace(/,,/g, ',');
 

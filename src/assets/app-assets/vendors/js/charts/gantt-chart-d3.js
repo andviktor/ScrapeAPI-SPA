@@ -108,7 +108,7 @@ d3.gantt = function(tasks) {
 
 	 return gantt;
 
-    };
+    }
 
     gantt.redraw = function(tasks) {
 
