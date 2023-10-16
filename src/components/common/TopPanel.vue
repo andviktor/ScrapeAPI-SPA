@@ -10,7 +10,7 @@ import { RouterLink } from 'vue-router'
           <ul class="nav navbar-nav flex-row">
             <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
             <li class="nav-item d-md-none">
-              <RouterLink to="/" class="navbar-brand"><img class="brand-logo d-none d-md-block" alt="CryptoDash admin logo" src="/src/assets/app-assets/images/logo/logo.png"><img class="brand-logo d-sm-block d-md-none" alt="CryptoDash admin logo sm" src="/src/assets/app-assets/images/logo/logo-sm.png"></RouterLink>
+              <RouterLink :to="{name: 'dashboard'}" class="navbar-brand"><img class="brand-logo d-none d-md-block" alt="CryptoDash admin logo" src="/src/assets/app-assets/images/logo/logo.png"><img class="brand-logo d-sm-block d-md-none" alt="CryptoDash admin logo sm" src="/src/assets/app-assets/images/logo/logo-sm.png"></RouterLink>
             </li>
             <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="la la-ellipsis-v">   </i></a></li>
           </ul>
@@ -18,12 +18,7 @@ import { RouterLink } from 'vue-router'
         <div class="navbar-container">
           <div class="collapse navbar-collapse" id="navbar-mobile">
             <ul class="nav navbar-nav mr-auto float-left">
-              <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu">         </i></a></li>
-              <li class="nav-item nav-search"><a class="nav-link nav-link-search" href="#"><i class="ficon ft-search"></i></a>
-                <div class="search-input">
-                  <input class="input" type="text" placeholder="Search on the page...">
-                </div>
-              </li>
+              <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a></li>
             </ul>
             <ul class="nav navbar-nav float-right">
               <li class="dropdown dropdown-user nav-item">
@@ -31,11 +26,11 @@ import { RouterLink } from 'vue-router'
                   <i class="ficon ft-user"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                  <RouterLink to="/account/profile" class="dropdown-item">
+                  <RouterLink to="/" class="dropdown-item">
                     <i class="ft-user"></i> Profile
                   </RouterLink>
                   <div class="dropdown-divider"></div>
-                  <RouterLink to="/account/logout" class="dropdown-item">
+                  <RouterLink to="/" class="dropdown-item">
                     <i class="ft-power"></i> Logout
                   </RouterLink>
                 </div>

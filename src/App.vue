@@ -11,11 +11,7 @@ import FooterPanel from './components/common/FooterPanel.vue'
 
   <div class="app-content content">
       <div class="content-wrapper">
-        <div class="content-header row">
-        </div>
-        <div class="content-body">
           <RouterView />
-        </div>
       </div>
     </div>
 

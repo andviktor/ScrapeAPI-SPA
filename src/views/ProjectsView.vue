@@ -1,6 +1,7 @@
 <script setup>
+import ProjectsList from '../components/projects/ProjectsList.vue';
 </script>
 
 <template>
-  Projects page
+  <ProjectsList />
 </template>
