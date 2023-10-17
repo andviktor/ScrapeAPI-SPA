@@ -1,14 +1,15 @@
 <script>
 import { toast } from 'vue3-toastify'
-import DeleteItemButton from '../ui/DeleteItemButton.vue'
+import ItemsList from '../ui/ItemsList.vue'
 export default {
     name: "ProjectsList",
     components: {
-        DeleteItemButton
+        ItemsList
     },
     data() {
         return {
-            projects: []
+            projects: [],
+            items_loaded: false
         }
     },
     methods: {
@@ -22,10 +23,11 @@ export default {
             .then(resp => resp.json())
             .then(resp => {
                 this.projects = resp;
+                this.items_loaded = true
             })
             .catch(error => console.log(error))
         },
-        deleteProject(id) {
+        deleteItem(id) {
             fetch('http://127.0.0.1:8000/api/projects/'+id+'/', {
                 method: 'DELETE',
                 headers: {
@@ -59,72 +61,63 @@ export default {
 </script>
 
 <template>
-        <div class="content-header row">
-          <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
-            <h3 class="content-header-title mb-0 d-inline-block">Projects</h3>
-            <div class="row breadcrumbs-top d-inline-block">
-              <div class="breadcrumb-wrapper col-12">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item">
-                    <RouterLink :to="{name: 'dashboard'}">Dashboard</RouterLink>
-                  </li>
-                  <li class="breadcrumb-item active">Projects
-                  </li>
-                </ol>
-              </div>
-            </div>
-          </div>
-          <div class="content-header-right col-md-4 col-12 d-none d-md-inline-block">
-            <div class="btn-group float-md-right">
-                <RouterLink :to="{name: 'projects_create'}" class="btn-gradient-secondary btn-sm white">Create a project</RouterLink>
-            </div>
-          </div>
-        </div>
-        <div class="content-body">
-            <div id="projects">
-                <div class="projects-table-th d-none d-md-block">
-                    <div class="col-12">
-                        <div class="row px-1">
-                            <div class="col-md-3 col-12 py-1">
-                                <p class="mb-0">Title</p>
-                            </div>
-                            <div class="col-md-9 col-12 py-1">
-                                <p class="mb-0">Description</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="projects-table-tbody">
-                    <section 
-                        v-for="project in projects" 
-                        v-bind:key="project.id" 
-                        class="card pull-up"
-                    >
-                        <div class="card-content">
-                            <div class="card-body">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-md-3 col-12 py-1">
-                                            <p class="mb-0"><span class="d-inline-block d-md-none text-bold-700 mr-1">Title:</span>{{ project.title }}</p>
-                                        </div>
-                                        <div class="col-md-4 col-lg-5 col-12 py-1">
-                                            <p class="mb-0"><span class="d-inline-block d-md-none text-bold-700 mr-1">Description:</span>{{ project.description }}</p>
-                                        </div>
-                                        <div class="col-md-5 col-lg-4 col-12 py-1 text-md-right">
-                                            <p class="mb-0">
-                                                <RouterLink :to="{name: 'scrapers', params: {project_id: project.id}}" class="mb-0 mr-1 btn-sm btn btn-outline-success round">Scrapers</RouterLink>
-                                                <RouterLink :to="{name: 'projects_edit', params: {id: project.id}}" class="mb-0 mr-1 btn-sm btn btn-outline-info round">Edit</RouterLink>
-                                                <DeleteItemButton @delete-event="deleteProject(project.id)" />
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div>
-        </div>
+    <ItemsList v-if="items_loaded"
+        item_title = "Project"
+        items_title = "Projects"
+        :items = projects
+        :columns = "[
+            {
+                title: 'title',
+                header: 'Title',
+                header_class: 'col-md-3',
+                class: 'col-md-3'
+            },
+            {
+                title: 'description',
+                header: 'Description',
+                header_class: 'col-md-9',
+                class: 'col-md-4 col-lg-5'
+            }
+        ]"
+        action_buttons_class = "col-md-5 col-lg-4"
+        :action_buttons = "[
+            {
+                title: 'Scrapers',
+                to: 'scrapers',
+                params: {
+                    name: 'project_id',
+                    key: 'id'
+                },
+                class: 'btn-outline-success'
+            },
+            {
+                title: 'Edit',
+                to: 'projects_edit',
+                params: {
+                    name: 'id',
+                    key: 'id'
+                },
+                class: 'btn-outline-info'
+            }
+        ]"
+        :delete_button = "true"
+        @delete-event="deleteItem"
+        :breadcrumbs = "[
+            {
+                title: 'Dashboard',
+                to: 'dashboard'
+            },
+            {
+                title: 'Projects'
+            }
+        ]"
+        :top_buttons = "[
+            {
+                title: 'Create a project',
+                to: 'projects_create'
+            }
+        ]"
+    />
 </template>
 
 <style scoped></style>
