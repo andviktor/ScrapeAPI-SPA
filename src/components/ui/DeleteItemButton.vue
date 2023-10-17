@@ -5,6 +5,7 @@ export default {
         expanded: false
       }
     },
+    emits: ['delete-event']
 }
 </script>
 
