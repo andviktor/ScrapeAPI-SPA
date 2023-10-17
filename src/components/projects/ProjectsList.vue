@@ -30,8 +30,9 @@ export default {
             })
             .then(resp => {
               if(resp.status == 204) {
+                  let project = this.projects.filter(project => project.id === id)
                   this.projects = this.projects.filter(project => project.id !== id)
-                  toast('Project has been successfully deleted.', {
+                  toast('Project "'+project[0].title+'" has been successfully deleted.', {
                     type: 'success'
                   })
               }
