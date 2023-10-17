@@ -1,7 +1,11 @@
 <script>
 import { toast } from 'vue3-toastify'
+import DeleteItemButton from '../ui/DeleteItemButton.vue'
 export default {
     name: "ProjectsList",
+    components: {
+        DeleteItemButton
+    },
     data() {
         return {
             projects: []
@@ -94,7 +98,11 @@ export default {
                     </div>
                 </div>
                 <div class="projects-table-tbody">
-                    <section v-for="project in projects" v-bind:key="project.id" class="card pull-up">
+                    <section 
+                        v-for="project in projects" 
+                        v-bind:key="project.id" 
+                        class="card pull-up"
+                    >
                         <div class="card-content">
                             <div class="card-body">
                                 <div class="col-12">
@@ -108,7 +116,7 @@ export default {
                                         <div class="col-md-3 col-12 py-1">
                                             <p class="mb-0">
                                                 <RouterLink :to="{name: 'projects_edit', params: {id: project.id}}" class="mb-0 mr-1 btn-sm btn btn-outline-info round">Edit</RouterLink>
-                                                <a @click="this.deleteProject(project.id)" class="mb-0 btn-sm btn btn-outline-danger round">Delete</a>
+                                                <DeleteItemButton @delete-event="deleteProject(project.id)" />
                                             </p>
                                         </div>
                                     </div>
