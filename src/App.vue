@@ -1,13 +1,13 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import TopPanel from './components/common/TopPanel.vue'
-import MainMenu from './components/common/MainMenu.vue'
-import FooterPanel from './components/common/FooterPanel.vue'
+import TheHeader from './components/common/TheHeader.vue'
+import TheMainMenu from './components/common/TheMainMenu.vue'
+import TheFooter from './components/common/TheFooter.vue'
 </script>
 
 <template>
-  <TopPanel />
-  <MainMenu />
+  <TheHeader />
+  <TheMainMenu />
 
   <div class="app-content content">
       <div class="content-wrapper">
@@ -15,7 +15,7 @@ import FooterPanel from './components/common/FooterPanel.vue'
       </div>
     </div>
 
-  <FooterPanel />
+  <TheFooter />
 </template>
 
 <style scoped>
