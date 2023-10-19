@@ -2,26 +2,26 @@
 import { toast } from 'vue3-toastify'
 import ItemsList from '../components/ui/ItemsList.vue'
 export default {
-    name: "ScrapersList",
+    name: "ElementsList",
     components: {
         ItemsList
     },
     data() {
         return {
-            project: {},
-            scrapers: [],
-            project_loaded: false,
-            scrapers_loaded: false
+            scraper: {},
+            elements: [],
+            scraper_loaded: false,
+            elements_loaded: false
         }
     },
     computed: {
         items_loaded: function() {
-            return this.project_loaded && this.scrapers_loaded
+            return this.scraper_loaded && this.elements_loaded
         }
     },
     methods: {
-        getProject() {
-            fetch('http://127.0.0.1:8000/api/projects/'+this.$route.params.project_id+'/', {
+        getScraper() {
+            fetch('http://127.0.0.1:8000/api/scrapers/'+this.$route.params.scraper_id+'/', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -30,13 +30,13 @@ export default {
             })
             .then(resp => resp.json())
             .then(resp => {
-                this.project = resp
-                this.project_loaded = true
+                this.scraper = resp
+                this.scraper_loaded = true
             })
             .catch(error => console.log(error))
         },
-        getScrapers() {
-            fetch('http://127.0.0.1:8000/api/scrapers/', {
+        getElements() {
+            fetch('http://127.0.0.1:8000/api/elements/', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,14 +45,14 @@ export default {
             })
             .then(resp => resp.json())
             .then(resp => {
-                this.scrapers = resp
-                this.scrapers = this.scrapers.filter(scraper => scraper.project == this.$route.params.project_id);
-                this.scrapers_loaded = true
+                this.elements = resp
+                this.elements = this.elements.filter(element => element.scraper == this.$route.params.scraper_id);
+                this.elements_loaded = true
             })
             .catch(error => console.log(error))
         },
         deleteItem(id) {
-            fetch('http://127.0.0.1:8000/api/scrapers/'+id+'/', {
+            fetch('http://127.0.0.1:8000/api/elements/'+id+'/', {
                 method: 'DELETE',
                 headers: {
                     'Authorization': 'Token 15e5a110fd84cc4e736100b5a5ca1e5898cfcd62'
@@ -60,9 +60,9 @@ export default {
             })
             .then(resp => {
               if(resp.status == 204) {
-                  let scraper = this.scrapers.filter(scraper => scraper.id === id)
-                  this.scrapers = this.scrapers.filter(scraper => scraper.id !== id)
-                  toast('Scraper "'+scraper[0].title+'" has been successfully deleted.', {
+                  let element = this.elements.filter(element => element.id === id)
+                  this.elements = this.elements.filter(element => element.id !== id)
+                  toast('Element "'+element[0].title+'" has been successfully deleted.', {
                     type: 'success'
                   })
               }
@@ -79,17 +79,17 @@ export default {
         }
     },
     created() {
-        this.getProject()
-        this.getScrapers()
+        this.getScraper()
+        this.getElements()
     }
 }
 </script>
 
 <template>
     <ItemsList v-if="items_loaded"
-        item_title = "Scraper"
-        items_title = "Scrapers"
-        :items = scrapers
+        item_title = "Element"
+        items_title = "Elements"
+        :items = elements
         :columns = "[
             {
                 title: 'title',
@@ -98,8 +98,8 @@ export default {
                 class: 'col-md-3'
             },
             {
-                title: 'description',
-                header: 'Description',
+                title: 'xpath',
+                header: 'XPath',
                 header_class: 'col-md-9',
                 class: 'col-md-4 col-lg-5'
             }
@@ -107,17 +107,8 @@ export default {
         action_buttons_class = "col-md-5 col-lg-4"
         :action_buttons = "[
             {
-                title: 'Elements',
-                to: 'elements',
-                params: {
-                    name: 'scraper_id',
-                    key: 'id'
-                },
-                class: 'btn-outline-success'
-            },
-            {
                 title: 'Edit',
-                to: 'scrapers_edit',
+                to: 'elements_edit',
                 params: {
                     name: 'id',
                     key: 'id'
@@ -129,25 +120,29 @@ export default {
         @delete-event="deleteItem"
         :breadcrumbs = "[
             {
-                title: 'Projects',
-                to: 'projects'
-            },
-            {
-                title: this.project.title,
-                to: 'projects_edit',
+                title: 'Scrapers',
+                to: 'scrapers',
                 params: {
-                    key: 'id',
-                    value: this.$route.params.project_id
+                    key: 'project_id',
+                    value: scraper.project
                 }
             },
             {
-                title: 'Scrapers'
+                title: scraper.title,
+                to: 'scrapers_edit',
+                params: {
+                    key: 'id',
+                    value: scraper.id
+                }
+            },
+            {
+                title: 'Elements'
             }
         ]"
         :top_buttons = "[
             {
-                title: 'Create a scraper',
-                to: 'scrapers_create'
+                title: 'Create an element',
+                to: 'elements_create'
             }
         ]"
     />

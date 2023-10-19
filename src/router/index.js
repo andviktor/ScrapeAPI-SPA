@@ -10,6 +10,10 @@ import ScrapersView from '../views/ScrapersView.vue'
 import ScrapersCreateView from '../views/ScrapersCreateView.vue'
 import ScrapersEditView from '../views/ScrapersEditView.vue'
 
+import ElementsView from '../views/ElementsView.vue'
+import ElementsCreateView from '../views/ElementsCreateView.vue'
+import ElementsEditView from '../views/ElementsEditView.vue'
+
 import FaqView from '../views/FaqView.vue'
 
 const router = createRouter({
@@ -49,6 +53,21 @@ const router = createRouter({
       path: '/scrapers/edit/:id',
       name: 'scrapers_edit',
       component: ScrapersEditView
+    },
+    {
+      path: '/elements/:scraper_id',
+      name: 'elements',
+      component: ElementsView
+    },
+    {
+      path: '/elements/:scraper_id/create',
+      name: 'elements_create',
+      component: ElementsCreateView
+    },
+    {
+      path: '/elements/edit/:id',
+      name: 'elements_edit',
+      component: ElementsEditView
     },
     {
       path: '/faq',
