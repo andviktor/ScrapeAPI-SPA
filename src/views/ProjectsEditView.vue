@@ -16,7 +16,7 @@ export default {
               fetch('http://127.0.0.1:8000/api/projects/'+this.$route.params.id+'/', {
                   method: 'GET',
                   headers: {
-                      'Authorization': 'Token 15e5a110fd84cc4e736100b5a5ca1e5898cfcd62'
+                      'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
                   }
               })
               .then(resp => resp.json())
@@ -31,7 +31,7 @@ export default {
               method: 'PATCH',
               headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Token 15e5a110fd84cc4e736100b5a5ca1e5898cfcd62'
+                  'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
               },
               body: JSON.stringify({
                   title: model.title,

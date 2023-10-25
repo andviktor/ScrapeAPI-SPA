@@ -17,7 +17,7 @@ export default {
             fetch('http://127.0.0.1:8000/api/projects/', {
                 method: 'GET',
                 headers: {
-                    'Authorization': 'Token 15e5a110fd84cc4e736100b5a5ca1e5898cfcd62'
+                    'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
                 }
             })
             .then(resp => resp.json())
@@ -31,7 +31,7 @@ export default {
             fetch('http://127.0.0.1:8000/api/projects/'+id+'/', {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': 'Token 15e5a110fd84cc4e736100b5a5ca1e5898cfcd62'
+                    'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
                 }
             })
             .then(resp => {
@@ -60,7 +60,7 @@ export default {
 }
 </script>
 
-<template>
+<template>{{ api_key }}
     <ItemsList v-if="items_loaded"
         item_title = "Project"
         items_title = "Projects"

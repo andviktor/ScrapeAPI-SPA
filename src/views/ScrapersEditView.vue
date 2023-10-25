@@ -19,7 +19,7 @@ export default {
                   method: 'GET',
                   headers: {
                       'Content-Type': 'application/json',
-                      'Authorization': 'Token 15e5a110fd84cc4e736100b5a5ca1e5898cfcd62'
+                      'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
                   }
               })
               .then(resp => resp.json())
@@ -33,7 +33,7 @@ export default {
               fetch('http://127.0.0.1:8000/api/scrapers/'+this.$route.params.id+'/', {
                   method: 'GET',
                   headers: {
-                      'Authorization': 'Token 15e5a110fd84cc4e736100b5a5ca1e5898cfcd62'
+                      'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
                   }
               })
               .then(resp => resp.json())
@@ -49,12 +49,14 @@ export default {
               method: 'PATCH',
               headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Token 15e5a110fd84cc4e736100b5a5ca1e5898cfcd62'
+                  'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
               },
               body: JSON.stringify({
                   title: model.title,
                   description: model.description,
-                  headers: model.headers
+                  headers: model.headers,
+                  source_urls: model.source_urls,
+                  source_json_url_field: model.source_json_url_field
               })
           })
           .then(resp => {
@@ -113,6 +115,18 @@ export default {
         name: 'scraper-headers',
         placeholder: 'Headers',
         model: 'headers'
+      },
+      {
+        type: 'textarea',
+        name: 'scraper-source-urls',
+        placeholder: 'Source URL(-s)',
+        model: 'source_urls'
+      },
+      {
+        type: 'text',
+        name: 'scraper-source-json-url-field',
+        placeholder: 'Source JSON URL field',
+        model: 'source_json_url_field'
       }
     ]"
     :breadcrumbs = "[
