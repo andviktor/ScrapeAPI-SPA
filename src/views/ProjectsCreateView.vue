@@ -7,7 +7,7 @@ export default {
     },
     methods: {
         saveItem(model) {
-          fetch(`http://127.0.0.1:8000/api/projects/`, {
+          fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/projects/', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',

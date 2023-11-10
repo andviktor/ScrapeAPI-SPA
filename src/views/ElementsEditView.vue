@@ -15,7 +15,7 @@ export default {
     },
     methods: {
           getScraper() {
-              fetch('http://127.0.0.1:8000/api/scrapers/'+this.element.scraper+'/', {
+              fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/scrapers/'+this.element.scraper+'/', {
                   method: 'GET',
                   headers: {
                       'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ export default {
               .catch(error => console.log(error))
           },
           getElement() {
-              fetch('http://127.0.0.1:8000/api/elements/'+this.$route.params.id+'/', {
+              fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/elements/'+this.$route.params.id+'/', {
                   method: 'GET',
                   headers: {
                       'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN 
@@ -45,7 +45,7 @@ export default {
               .catch(error => console.log(error))
         },
         saveItem(model) {
-          fetch(`http://127.0.0.1:8000/api/elements/`+this.$route.params.id+'/', {
+          fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/elements/'+this.$route.params.id+'/', {
               method: 'PATCH',
               headers: {
                   'Content-Type': 'application/json',

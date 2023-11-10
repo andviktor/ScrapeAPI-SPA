@@ -13,7 +13,7 @@ export default {
     },
     methods: {
         getProject() {
-              fetch('http://127.0.0.1:8000/api/projects/'+this.$route.params.id+'/', {
+              fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/projects/'+this.$route.params.id+'/', {
                   method: 'GET',
                   headers: {
                       'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
@@ -27,7 +27,7 @@ export default {
               .catch(error => console.log(error))
         },
         saveItem(model) {
-          fetch(`http://127.0.0.1:8000/api/projects/`+this.project.id+'/', {
+          fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/projects/'+this.project.id+'/', {
               method: 'PATCH',
               headers: {
                   'Content-Type': 'application/json',

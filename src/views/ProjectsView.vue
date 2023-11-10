@@ -14,7 +14,7 @@ export default {
     },
     methods: {
         getProjects() {
-            fetch('http://127.0.0.1:8000/api/projects/', {
+            fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/projects/', {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
@@ -28,7 +28,7 @@ export default {
             .catch(error => console.log(error))
         },
         deleteItem(id) {
-            fetch('http://127.0.0.1:8000/api/projects/'+id+'/', {
+            fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/projects/'+id+'/', {
                 method: 'DELETE',
                 headers: {
                     'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
