@@ -36,7 +36,8 @@ export default {
                   scraper: this.$route.params.scraper_id,
                   title: model.element_title,
                   xpath: model.element_xpath,
-                  regex_sub: model.element_regex_sub,
+                  regex_sub_pattern: model.element_regex_sub_pattern,
+                  regex_sub_repl: model.element_regex_sub_repl,
                   regex_search: model.element_regex_search,
                   concat_result: model.element_concat_result
               })
@@ -100,9 +101,15 @@ export default {
       },
       {
         type: 'text',
-        name: 'element-regex-sub',
-        placeholder: 'Regex Sub',
-        model: 'element_regex_sub'
+        name: 'element-regex-sub-pattern',
+        placeholder: 'Regex Sub Pattern',
+        model: 'element_regex_sub_pattern'
+      },
+      {
+        type: 'text',
+        name: 'element-regex-sub-repl',
+        placeholder: 'Regex Sub Replacement',
+        model: 'element_regex_sub_repl'
       },
       {
         type: 'text',

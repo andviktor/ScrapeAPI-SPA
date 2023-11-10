@@ -54,7 +54,8 @@ export default {
               body: JSON.stringify({
                   title: model.title,
                   xpath: model.xpath,
-                  regex_sub: model.regex_sub,
+                  regex_sub_pattern: model.regex_sub_pattern,
+                  regex_sub_repl: model.regex_sub_repl,
                   regex_search: model.regex_search,
                   concat_result: model.concat_result
               })
@@ -112,9 +113,15 @@ export default {
       },
       {
         type: 'text',
-        name: 'element-regex-sub',
-        placeholder: 'Regex Sub',
-        model: 'regex_sub'
+        name: 'element-regex-sub-pattern',
+        placeholder: 'Regex Sub Pattern',
+        model: 'regex_sub_pattern'
+      },
+      {
+        type: 'text',
+        name: 'element-regex-sub-repl',
+        placeholder: 'Regex Sub Replacement',
+        model: 'regex_sub_repl'
       },
       {
         type: 'text',
