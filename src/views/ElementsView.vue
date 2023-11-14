@@ -8,18 +8,35 @@ export default {
     },
     data() {
         return {
+            project: {},
             scraper: {},
             elements: [],
+            project_loaded: false,
             scraper_loaded: false,
-            elements_loaded: false
+            elements_loaded: false,
         }
     },
     computed: {
         items_loaded: function() {
-            return this.scraper_loaded && this.elements_loaded
+            return this.project_loaded && this.scraper_loaded && this.elements_loaded
         }
     },
     methods: {
+        getProject() {
+            fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/projects/'+this.scraper.project+'/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
+                }
+            })
+            .then(resp => resp.json())
+            .then(resp => {
+                this.project = resp
+                this.project_loaded = true
+            })
+            .catch(error => console.log(error))
+        },
         getScraper() {
             fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/scrapers/'+this.$route.params.scraper_id+'/', {
                 method: 'GET',
@@ -32,6 +49,8 @@ export default {
             .then(resp => {
                 this.scraper = resp
                 this.scraper_loaded = true
+                this.getProject()
+                this.getElements()
             })
             .catch(error => console.log(error))
         },
@@ -79,8 +98,7 @@ export default {
         }
     },
     created() {
-        this.getScraper()
-        this.getElements()
+        this.getScraper()        
     }
 }
 </script>
@@ -120,23 +138,23 @@ export default {
         @delete-event="deleteItem"
         :breadcrumbs = "[
             {
-                title: 'Scrapers',
+                title: 'Dashboard',
+                to: 'dashboard'
+            },
+            {
+                title: 'Projects',
+                to: 'projects'
+            },
+            {
+                title: this.project.title,
                 to: 'scrapers',
                 params: {
-                    key: 'project_id',
-                    value: scraper.project
+                key: 'project_id',
+                value: this.scraper.project
                 }
             },
             {
-                title: scraper.title,
-                to: 'scrapers_edit',
-                params: {
-                    key: 'id',
-                    value: scraper.id
-                }
-            },
-            {
-                title: 'Elements'
+                title: scraper.title
             }
         ]"
         :top_buttons = "[

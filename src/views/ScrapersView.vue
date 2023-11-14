@@ -11,7 +11,7 @@ export default {
             project: {},
             scrapers: [],
             project_loaded: false,
-            scrapers_loaded: false
+            scrapers_loaded: false,
         }
     },
     computed: {
@@ -76,7 +76,7 @@ export default {
           .catch(error => toast("Error: "+error, {
                 type: 'error'
               }))
-        }
+        },
     },
     created() {
         this.getProject()
@@ -107,6 +107,15 @@ export default {
         action_buttons_class = "col-md-5 col-lg-4"
         :action_buttons = "[
             {
+                title: 'Data',
+                to: 'scrapers_data',
+                params: {
+                    name: 'id',
+                    key: 'id'
+                },
+                class: 'btn-info'
+            },
+            {
                 title: 'Elements',
                 to: 'elements',
                 params: {
@@ -129,19 +138,15 @@ export default {
         @delete-event="deleteItem"
         :breadcrumbs = "[
             {
+                title: 'Dashboard',
+                to: 'dashboard'
+            },
+            {
                 title: 'Projects',
                 to: 'projects'
             },
             {
-                title: this.project.title,
-                to: 'projects_edit',
-                params: {
-                    key: 'id',
-                    value: this.$route.params.project_id
-                }
-            },
-            {
-                title: 'Scrapers'
+                title: this.project.title
             }
         ]"
         :top_buttons = "[

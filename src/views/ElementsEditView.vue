@@ -4,16 +4,33 @@ import ItemEditForm from '../components/ui/ItemEditForm.vue';
 export default {
     data() {
       return {
+        project: {},
         scraper: {},
         element: {},
+        project_loaded: false,
         scraper_loaded: false,
-        element_loaded: false
+        element_loaded: false,
       }
     },
     components: {
       ItemEditForm
     },
     methods: {
+          getProject() {
+              fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/projects/'+this.scraper.project+'/', {
+                  method: 'GET',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
+                  }
+              })
+              .then(resp => resp.json())
+              .then(resp => {
+                  this.project = resp
+                  this.project_loaded = true
+              })
+              .catch(error => console.log(error))
+          },
           getScraper() {
               fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/scrapers/'+this.element.scraper+'/', {
                   method: 'GET',
@@ -26,6 +43,7 @@ export default {
               .then(resp => {
                   this.scraper = resp
                   this.scraper_loaded = true
+                  this.getProject()
               })
               .catch(error => console.log(error))
           },
@@ -95,7 +113,7 @@ export default {
 </script>
 
 <template>
-  <ItemEditForm v-if="scraper_loaded && element_loaded"
+  <ItemEditForm v-if="this.project_loaded && this.scraper_loaded && this.element_loaded"
     :title = element.title
     :model = element
     :fields = "[
@@ -138,23 +156,31 @@ export default {
     ]"
     :breadcrumbs = "[
         {
-            title: this.scraper.title,
-            to: 'scrapers_edit',
+            title: 'Dashboard',
+            to: 'dashboard'
+        },
+        {
+            title: 'Projects',
+            to: 'projects'
+        },
+        {
+            title: this.project.title,
+            to: 'scrapers',
             params: {
-                key: 'id',
-                value: this.scraper.id
+            key: 'project_id',
+            value: this.project.id
             }
         },
         {
-            title: 'Elements',
+            title: this.scraper.title,
             to: 'elements',
             params: {
-                key: 'scraper_id',
-                value: this.scraper.id
+              key: 'scraper_id',
+              value: this.scraper.id
             }
         },
         {
-            title: 'Edit the element'
+            title: this.element.title
         }
     ]"
     @save-event="saveItem"

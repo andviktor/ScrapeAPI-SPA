@@ -9,6 +9,7 @@ import ProjectsEditView from '../views/ProjectsEditView.vue'
 import ScrapersView from '../views/ScrapersView.vue'
 import ScrapersCreateView from '../views/ScrapersCreateView.vue'
 import ScrapersEditView from '../views/ScrapersEditView.vue'
+import ScrapersDataView from '../views/ScrapersDataView.vue'
 
 import ElementsView from '../views/ElementsView.vue'
 import ElementsCreateView from '../views/ElementsCreateView.vue'
@@ -53,6 +54,11 @@ const router = createRouter({
       path: '/scrapers/edit/:id',
       name: 'scrapers_edit',
       component: ScrapersEditView
+    },
+    {
+      path: '/scrapers/data/:id',
+      name: 'scrapers_data',
+      component: ScrapersDataView
     },
     {
       path: '/elements/:scraper_id',

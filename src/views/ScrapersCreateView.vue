@@ -103,12 +103,12 @@ export default {
     ]"
     :breadcrumbs = "[
         {
-            title: this.project.title,
-            to: 'projects_edit',
-            params: {
-              key: 'id',
-              value: this.$route.params.project_id
-            }
+            title: 'Dashboard',
+            to: 'dashboard'
+        },
+        {
+            title: 'Projects',
+            to: 'projects'
         },
         {
             title: 'Scrapers',
@@ -119,7 +119,7 @@ export default {
             }
         },
         {
-            title: 'Create a scraper'
+            title: 'Create scraper'
         }
     ]"
     @save-event="saveItem"

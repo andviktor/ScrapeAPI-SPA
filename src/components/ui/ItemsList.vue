@@ -95,9 +95,12 @@ export default {
                                                 v-for="(action_button, index) in action_buttons" 
                                                 v-bind:key="action_button.title" 
                                                 :to="{name: action_button.to, params: action_buttons_with_params[item.id][index]}" 
-                                                :class="action_button.class" 
-                                                class="mb-0 mr-1 btn-sm btn btn-outline-success round"
-                                            >{{ action_button.title }}</RouterLink>
+                                                :class="action_button.class"
+                                                class="mb-0 mr-1 btn-sm btn round"
+                                            >
+                                            
+                                            {{ action_button.state_trigger ? action_button.state_title : action_button.title }}
+                                            </RouterLink>
                                             <DeleteItemButton v-if="delete_button" @delete-event="this.deleteEvent(item.id)" />
                                         </p>
                                     </div>

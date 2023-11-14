@@ -92,11 +92,15 @@ export default {
     ]"
     :breadcrumbs = "[
         {
+            title: 'Dashboard',
+            to: 'dashboard'
+        },
+        {
             title: 'Projects',
             to: 'projects'
         },
         {
-            title: 'Edit the project'
+            title: this.project.title
         }
     ]"
     @save-event="saveItem"
