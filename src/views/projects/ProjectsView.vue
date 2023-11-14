@@ -1,6 +1,6 @@
 <script>
 import { toast } from 'vue3-toastify'
-import ItemsList from '../components/ui/ItemsList.vue'
+import ItemsList from '../../components/ui/ItemsList.vue'
 export default {
     name: "ProjectsList",
     components: {

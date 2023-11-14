@@ -1,29 +1,27 @@
 <script>
 import { toast } from 'vue3-toastify'
-import ItemsList from '../components/ui/ItemsList.vue'
+import ItemsList from '../../components/ui/ItemsList.vue'
 export default {
-    name: "ElementsList",
+    name: "ScrapersList",
     components: {
         ItemsList
     },
     data() {
         return {
             project: {},
-            scraper: {},
-            elements: [],
+            scrapers: [],
             project_loaded: false,
-            scraper_loaded: false,
-            elements_loaded: false,
+            scrapers_loaded: false,
         }
     },
     computed: {
         items_loaded: function() {
-            return this.project_loaded && this.scraper_loaded && this.elements_loaded
+            return this.project_loaded && this.scrapers_loaded
         }
     },
     methods: {
         getProject() {
-            fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/projects/'+this.scraper.project+'/', {
+            fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/projects/'+this.$route.params.project_id+'/', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -37,8 +35,8 @@ export default {
             })
             .catch(error => console.log(error))
         },
-        getScraper() {
-            fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/scrapers/'+this.$route.params.scraper_id+'/', {
+        getScrapers() {
+            fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/scrapers/', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -47,31 +45,14 @@ export default {
             })
             .then(resp => resp.json())
             .then(resp => {
-                this.scraper = resp
-                this.scraper_loaded = true
-                this.getProject()
-                this.getElements()
-            })
-            .catch(error => console.log(error))
-        },
-        getElements() {
-            fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/elements/', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
-                }
-            })
-            .then(resp => resp.json())
-            .then(resp => {
-                this.elements = resp
-                this.elements = this.elements.filter(element => element.scraper == this.$route.params.scraper_id);
-                this.elements_loaded = true
+                this.scrapers = resp
+                this.scrapers = this.scrapers.filter(scraper => scraper.project == this.$route.params.project_id);
+                this.scrapers_loaded = true
             })
             .catch(error => console.log(error))
         },
         deleteItem(id) {
-            fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/elements/'+id+'/', {
+            fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/scrapers/'+id+'/', {
                 method: 'DELETE',
                 headers: {
                     'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
@@ -79,9 +60,9 @@ export default {
             })
             .then(resp => {
               if(resp.status == 204) {
-                  let element = this.elements.filter(element => element.id === id)
-                  this.elements = this.elements.filter(element => element.id !== id)
-                  toast('Element "'+element[0].title+'" has been successfully deleted.', {
+                  let scraper = this.scrapers.filter(scraper => scraper.id === id)
+                  this.scrapers = this.scrapers.filter(scraper => scraper.id !== id)
+                  toast('Scraper "'+scraper[0].title+'" has been successfully deleted.', {
                     type: 'success'
                   })
               }
@@ -95,19 +76,20 @@ export default {
           .catch(error => toast("Error: "+error, {
                 type: 'error'
               }))
-        }
+        },
     },
     created() {
-        this.getScraper()        
+        this.getProject()
+        this.getScrapers()
     }
 }
 </script>
 
 <template>
     <ItemsList v-if="items_loaded"
-        item_title = "Element"
-        items_title = "Elements"
-        :items = elements
+        item_title = "Scraper"
+        items_title = "Scrapers"
+        :items = scrapers
         :columns = "[
             {
                 title: 'title',
@@ -116,8 +98,8 @@ export default {
                 class: 'col-md-3'
             },
             {
-                title: 'xpath',
-                header: 'XPath',
+                title: 'description',
+                header: 'Description',
                 header_class: 'col-md-9',
                 class: 'col-md-4 col-lg-5'
             }
@@ -125,8 +107,26 @@ export default {
         action_buttons_class = "col-md-5 col-lg-4"
         :action_buttons = "[
             {
+                title: 'Data',
+                to: 'scrapers_data',
+                params: {
+                    name: 'id',
+                    key: 'id'
+                },
+                class: 'btn-info'
+            },
+            {
+                title: 'Elements',
+                to: 'elements',
+                params: {
+                    name: 'scraper_id',
+                    key: 'id'
+                },
+                class: 'btn-outline-success'
+            },
+            {
                 title: 'Edit',
-                to: 'elements_edit',
+                to: 'scrapers_edit',
                 params: {
                     name: 'id',
                     key: 'id'
@@ -146,21 +146,13 @@ export default {
                 to: 'projects'
             },
             {
-                title: this.project.title,
-                to: 'scrapers',
-                params: {
-                key: 'project_id',
-                value: this.scraper.project
-                }
-            },
-            {
-                title: scraper.title
+                title: this.project.title
             }
         ]"
         :top_buttons = "[
             {
-                title: 'Create an element',
-                to: 'elements_create'
+                title: 'Create a scraper',
+                to: 'scrapers_create'
             }
         ]"
     />

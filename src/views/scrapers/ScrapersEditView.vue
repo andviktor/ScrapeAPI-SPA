@@ -1,15 +1,13 @@
 <script>
 import { toast } from 'vue3-toastify'
-import ItemEditForm from '../components/ui/ItemEditForm.vue';
+import ItemEditForm from '../../components/ui/ItemEditForm.vue';
 export default {
     data() {
       return {
         project: {},
         scraper: {},
-        element: {},
         project_loaded: false,
-        scraper_loaded: false,
-        element_loaded: false,
+        scraper_loaded: false
       }
     },
     components: {
@@ -32,10 +30,9 @@ export default {
               .catch(error => console.log(error))
           },
           getScraper() {
-              fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/scrapers/'+this.element.scraper+'/', {
+              fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/scrapers/'+this.$route.params.id+'/', {
                   method: 'GET',
                   headers: {
-                      'Content-Type': 'application/json',
                       'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
                   }
               })
@@ -46,24 +43,9 @@ export default {
                   this.getProject()
               })
               .catch(error => console.log(error))
-          },
-          getElement() {
-              fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/elements/'+this.$route.params.id+'/', {
-                  method: 'GET',
-                  headers: {
-                      'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN 
-                  }
-              })
-              .then(resp => resp.json())
-              .then(resp => {
-                  this.element = resp
-                  this.element_loaded = true
-                  this.getScraper()
-              })
-              .catch(error => console.log(error))
         },
         saveItem(model) {
-          fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/elements/'+this.$route.params.id+'/', {
+          fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/scrapers/'+this.scraper.id+'/', {
               method: 'PATCH',
               headers: {
                   'Content-Type': 'application/json',
@@ -71,20 +53,19 @@ export default {
               },
               body: JSON.stringify({
                   title: model.title,
-                  xpath: model.xpath,
-                  regex_sub_pattern: model.regex_sub_pattern,
-                  regex_sub_repl: model.regex_sub_repl,
-                  regex_search: model.regex_search,
-                  concat_result: model.concat_result
+                  description: model.description,
+                  headers: model.headers,
+                  source_urls: model.source_urls,
+                  source_json_url_field: model.source_json_url_field
               })
           })
           .then(resp => {
               if(resp.status == 200) {
                 this.$router.push({
-                  path: '/elements/'+model.scraper
+                  path: '/scrapers/'+model.project
                 })
                 .then(() => {
-                  toast('Element "'+ model.title +'" has been successfully changed.', {
+                  toast('Scraper "'+ model.title +'" has been successfully changed.', {
                     type: 'success'
                   });
                 })
@@ -107,51 +88,45 @@ export default {
         }
     },
     created() {
-      this.getElement()
+      this.getScraper()
     }
 }
 </script>
 
 <template>
-  <ItemEditForm v-if="this.project_loaded && this.scraper_loaded && this.element_loaded"
-    :title = element.title
-    :model = element
+  <ItemEditForm v-if="project_loaded && scraper_loaded"
+    :title = scraper.title
+    :model = scraper
     :fields = "[
       {
         type: 'text',
-        name: 'element-title',
-        placeholder: 'Element title',
+        name: 'scraper-title',
+        placeholder: 'Scraper title',
         model: 'title'
       },
       {
-        type: 'text',
-        name: 'element-xpath',
-        placeholder: 'Element Xpath',
-        model: 'xpath'
+        type: 'textarea',
+        name: 'scraper-description',
+        placeholder: 'Scraper description',
+        model: 'description'
+      },
+      {
+        type: 'textarea',
+        name: 'scraper-headers',
+        placeholder: 'Headers',
+        model: 'headers'
+      },
+      {
+        type: 'textarea',
+        name: 'scraper-source-urls',
+        placeholder: 'Source URL(-s)',
+        model: 'source_urls'
       },
       {
         type: 'text',
-        name: 'element-regex-sub-pattern',
-        placeholder: 'Regex Sub Pattern',
-        model: 'regex_sub_pattern'
-      },
-      {
-        type: 'text',
-        name: 'element-regex-sub-repl',
-        placeholder: 'Regex Sub Replacement',
-        model: 'regex_sub_repl'
-      },
-      {
-        type: 'text',
-        name: 'element-regex-search',
-        placeholder: 'Regex Search',
-        model: 'regex_search'
-      },
-      {
-        type: 'text',
-        name: 'element-concat-result',
-        placeholder: 'Concatenate results',
-        model: 'concat_result'
+        name: 'scraper-source-json-url-field',
+        placeholder: 'Source JSON URL field',
+        model: 'source_json_url_field'
       }
     ]"
     :breadcrumbs = "[
@@ -164,23 +139,15 @@ export default {
             to: 'projects'
         },
         {
-            title: this.project.title,
+            title: 'Scrapers',
             to: 'scrapers',
             params: {
-            key: 'project_id',
-            value: this.project.id
+              key: 'project_id',
+              value: this.project.id
             }
         },
         {
-            title: this.scraper.title,
-            to: 'elements',
-            params: {
-              key: 'scraper_id',
-              value: this.scraper.id
-            }
-        },
-        {
-            title: this.element.title
+            title: this.scraper.title
         }
     ]"
     @save-event="saveItem"

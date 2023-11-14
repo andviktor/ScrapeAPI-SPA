@@ -1,21 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import DashboardView from '../views/DashboardView.vue'
+import DashboardView from '../views/dashboard/DashboardView.vue'
 
-import ProjectsView from '../views/ProjectsView.vue'
-import ProjectsCreateView from '../views/ProjectsCreateView.vue'
-import ProjectsEditView from '../views/ProjectsEditView.vue'
+import ProjectsView from '../views/projects/ProjectsView.vue'
+import ProjectsCreateView from '../views/projects/ProjectsCreateView.vue'
+import ProjectsEditView from '../views/projects/ProjectsEditView.vue'
 
-import ScrapersView from '../views/ScrapersView.vue'
-import ScrapersCreateView from '../views/ScrapersCreateView.vue'
-import ScrapersEditView from '../views/ScrapersEditView.vue'
-import ScrapersDataView from '../views/ScrapersDataView.vue'
+import ScrapersView from '../views/scrapers/ScrapersView.vue'
+import ScrapersCreateView from '../views/scrapers/ScrapersCreateView.vue'
+import ScrapersEditView from '../views/scrapers/ScrapersEditView.vue'
+import ScrapersDataView from '../views/scrapers/ScrapersDataView.vue'
 
-import ElementsView from '../views/ElementsView.vue'
-import ElementsCreateView from '../views/ElementsCreateView.vue'
-import ElementsEditView from '../views/ElementsEditView.vue'
+import ElementsView from '../views/elements/ElementsView.vue'
+import ElementsCreateView from '../views/elements/ElementsCreateView.vue'
+import ElementsEditView from '../views/elements/ElementsEditView.vue'
 
-import FaqView from '../views/FaqView.vue'
+import FaqView from '../views/faq/FaqView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

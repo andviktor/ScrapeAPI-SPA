@@ -1,50 +1,30 @@
 <script>
 import { toast } from 'vue3-toastify'
-import ItemEditForm from '../components/ui/ItemEditForm.vue';
+import ItemEditForm from '../../components/ui/ItemEditForm.vue';
 export default {
-    data() {
-      return {
-        project: {},
-        project_loaded: false
-      }
-    },
     components: {
       ItemEditForm
     },
     methods: {
-        getProject() {
-              fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/projects/'+this.$route.params.id+'/', {
-                  method: 'GET',
-                  headers: {
-                      'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
-                  }
-              })
-              .then(resp => resp.json())
-              .then(resp => {
-                  this.project = resp
-                  this.project_loaded = true
-              })
-              .catch(error => console.log(error))
-        },
         saveItem(model) {
-          fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/projects/'+this.project.id+'/', {
-              method: 'PATCH',
+          fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/projects/', {
+              method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
                   'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
               },
               body: JSON.stringify({
-                  title: model.title,
-                  description: model.description
+                  title: model.project_title,
+                  description: model.project_description
               })
           })
           .then(resp => {
-              if(resp.status == 200) {
+              if(resp.status == 201) {
                 this.$router.push({
                   path: '/projects'
                 })
                 .then(() => {
-                  toast('Project "'+ model.title +'" has been successfully changed.', {
+                  toast('Project "'+ this.project_title +'" has been successfully created.', {
                     type: 'success'
                   });
                 })
@@ -65,29 +45,29 @@ export default {
                 type: 'error'
               }))
         }
-    },
-    created() {
-      this.getProject()
     }
 }
 </script>
 
 <template>
-  <ItemEditForm v-if="project_loaded"
-    :title = project.title
-    :model = project
+  <ItemEditForm
+    title = "Create project"
+    :model = "{
+      project_title: '',
+      project_description: ''
+    }"
     :fields = "[
       {
         type: 'text',
         name: 'project-title',
         placeholder: 'Project title',
-        model: 'title'
+        model: 'project_title'
       },
       {
         type: 'textarea',
         name: 'project-description',
         placeholder: 'Project description',
-        model: 'description'
+        model: 'project_description'
       }
     ]"
     :breadcrumbs = "[
@@ -100,7 +80,7 @@ export default {
             to: 'projects'
         },
         {
-            title: this.project.title
+            title: 'Create project'
         }
     ]"
     @save-event="saveItem"

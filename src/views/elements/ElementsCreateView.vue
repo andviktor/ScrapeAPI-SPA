@@ -1,6 +1,6 @@
 <script>
 import { toast } from 'vue3-toastify'
-import ItemEditForm from '../components/ui/ItemEditForm.vue';
+import ItemEditForm from '../../components/ui/ItemEditForm.vue';
 export default {
     data() {
       return {

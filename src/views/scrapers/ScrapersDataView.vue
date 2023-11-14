@@ -2,7 +2,7 @@
 import { toast } from 'vue3-toastify'
 import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';
-import BreadCrumbs from '../components/ui/BreadCrumbs.vue'
+import BreadCrumbs from '../../components/ui/BreadCrumbs.vue'
 
 export default {
     data() {
