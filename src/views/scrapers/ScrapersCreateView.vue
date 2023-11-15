@@ -16,7 +16,7 @@ export default {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
+                    'Authorization': 'Token ' + $cookies.get("apitoken")
                 }
             })
             .then(resp => resp.json())
@@ -30,13 +30,15 @@ export default {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
+                  'Authorization': 'Token ' + $cookies.get("apitoken")
               },
               body: JSON.stringify({
                   project: this.$route.params.project_id,
                   title: model.scraper_title,
                   description: model.scraper_description,
-                  headers: model.scraper_headers
+                  headers: model.scraper_headers,
+                  source_urls: model.source_urls,
+                  source_json_url_field: model.source_json_url_field
               })
           })
           .then(resp => {
@@ -99,6 +101,18 @@ export default {
         name: 'scraper-headers',
         placeholder: 'Headers',
         model: 'scraper_headers'
+      },
+      {
+        type: 'textarea',
+        name: 'scraper-source-urls',
+        placeholder: 'Source URL(-s)',
+        model: 'source_urls'
+      },
+      {
+        type: 'text',
+        name: 'scraper-source-json-url-field',
+        placeholder: 'Source JSON URL field',
+        model: 'source_json_url_field'
       }
     ]"
     :breadcrumbs = "[

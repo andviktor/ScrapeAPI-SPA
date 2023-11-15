@@ -1,5 +1,13 @@
-<script setup>
+<script>
 import { RouterLink } from 'vue-router'
+export default {
+  methods: {
+    logOut() {
+      $cookies.remove("apitoken")
+      location.reload()
+    }
+  }
+}
 </script>
 
 <template>
@@ -26,13 +34,9 @@ import { RouterLink } from 'vue-router'
                   <i class="ficon ft-user"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                  <RouterLink to="/" class="dropdown-item">
-                    <i class="ft-user"></i> Profile
-                  </RouterLink>
-                  <div class="dropdown-divider"></div>
-                  <RouterLink to="/" class="dropdown-item">
+                  <a @click="logOut()" class="dropdown-item">
                     <i class="ft-power"></i> Logout
-                  </RouterLink>
+                  </a>
                 </div>
               </li>
             </ul>

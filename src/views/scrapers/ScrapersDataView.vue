@@ -14,7 +14,7 @@ export default {
         breadcrumbs: [],
         running: false,
         json_url: import.meta.env.VITE_APP_API_URL+'/api/v1/scrapers/'+this.$route.params.id+'/json/',
-        auth_token: import.meta.env.VITE_APP_API_TOKEN,
+        auth_token: $cookies.get("apitoken"),
       }
     },
     components: {
@@ -25,7 +25,7 @@ export default {
             fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/scrapers/'+this.$route.params.id+'/', {
                 method: 'GET',
                 headers: {
-                    'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
+                    'Authorization': 'Token ' + $cookies.get("apitoken")
                 }
             })
             .then(resp => resp.json())
@@ -41,7 +41,7 @@ export default {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
+                    'Authorization': 'Token ' + $cookies.get("apitoken")
                 }
             })
             .then(resp => resp.json())
@@ -90,7 +90,7 @@ export default {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
+                    'Authorization': 'Token ' + $cookies.get("apitoken")
                 }
             })
             .then(resp => {

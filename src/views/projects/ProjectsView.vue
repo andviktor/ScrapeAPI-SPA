@@ -12,12 +12,13 @@ export default {
             items_loaded: false
         }
     },
+    emits: ['unauthorized'],
     methods: {
         getProjects() {
             fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/projects/', {
                 method: 'GET',
                 headers: {
-                    'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
+                    'Authorization': 'Token ' + $cookies.get("apitoken")
                 }
             })
             .then(resp => resp.json())
@@ -31,7 +32,7 @@ export default {
             fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/projects/'+id+'/', {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
+                    'Authorization': 'Token ' + $cookies.get("apitoken")
                 }
             })
             .then(resp => {
@@ -60,7 +61,7 @@ export default {
 }
 </script>
 
-<template>{{ api_key }}
+<template>
     <ItemsList v-if="items_loaded"
         item_title = "Project"
         items_title = "Projects"

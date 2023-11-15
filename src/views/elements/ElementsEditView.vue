@@ -21,7 +21,7 @@ export default {
                   method: 'GET',
                   headers: {
                       'Content-Type': 'application/json',
-                      'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
+                      'Authorization': 'Token ' + $cookies.get("apitoken")
                   }
               })
               .then(resp => resp.json())
@@ -36,7 +36,7 @@ export default {
                   method: 'GET',
                   headers: {
                       'Content-Type': 'application/json',
-                      'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
+                      'Authorization': 'Token ' + $cookies.get("apitoken")
                   }
               })
               .then(resp => resp.json())
@@ -51,7 +51,7 @@ export default {
               fetch(import.meta.env.VITE_APP_API_URL+'/api/v1/elements/'+this.$route.params.id+'/', {
                   method: 'GET',
                   headers: {
-                      'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN 
+                      'Authorization': 'Token ' + $cookies.get("apitoken") 
                   }
               })
               .then(resp => resp.json())
@@ -67,7 +67,7 @@ export default {
               method: 'PATCH',
               headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
+                  'Authorization': 'Token ' + $cookies.get("apitoken")
               },
               body: JSON.stringify({
                   title: model.title,

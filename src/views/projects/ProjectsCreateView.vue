@@ -11,7 +11,7 @@ export default {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
+                  'Authorization': 'Token ' + $cookies.get("apitoken")
               },
               body: JSON.stringify({
                   title: model.project_title,

@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import DashboardView from '../views/dashboard/DashboardView.vue'
 
+import AuthView from '../views/auth/AuthView.vue'
+
 import ProjectsView from '../views/projects/ProjectsView.vue'
 import ProjectsCreateView from '../views/projects/ProjectsCreateView.vue'
 import ProjectsEditView from '../views/projects/ProjectsEditView.vue'
@@ -17,13 +19,23 @@ import ElementsEditView from '../views/elements/ElementsEditView.vue'
 
 import FaqView from '../views/faq/FaqView.vue'
 
+import PageNotFound from '../views/404/PageNotFound.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/:pathMatch(.*)*',
+      name: 'PageNotFound',
+      component: PageNotFound
+    },
+    {
       path: '/',
       name: 'dashboard',
-      component: DashboardView
+      components: {
+        default: DashboardView,
+        auth: AuthView,
+      }
     },
     {
       path: '/projects',
@@ -79,7 +91,7 @@ const router = createRouter({
       path: '/faq',
       name: 'faq',
       component: FaqView
-    }
+    },
   ]
 })
 

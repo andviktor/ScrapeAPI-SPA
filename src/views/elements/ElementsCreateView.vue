@@ -19,7 +19,7 @@ export default {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
+                    'Authorization': 'Token ' + $cookies.get("apitoken")
                 }
             })
             .then(resp => resp.json())
@@ -34,7 +34,7 @@ export default {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
+                    'Authorization': 'Token ' + $cookies.get("apitoken")
                 }
             })
             .then(resp => resp.json())
@@ -50,7 +50,7 @@ export default {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Token ' + import.meta.env.VITE_APP_API_TOKEN
+                  'Authorization': 'Token ' + $cookies.get("apitoken")
               },
               body: JSON.stringify({
                   scraper: this.$route.params.scraper_id,
