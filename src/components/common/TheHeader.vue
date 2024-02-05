@@ -18,7 +18,7 @@ export default {
           <ul class="nav navbar-nav flex-row">
             <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
             <li class="nav-item d-md-none">
-              <RouterLink :to="{name: 'dashboard'}" class="navbar-brand"><img class="brand-logo d-none d-md-block" alt="CryptoDash admin logo" src="/src/assets/app-assets/images/logo/logo.png"><img class="brand-logo d-sm-block d-md-none" alt="CryptoDash admin logo sm" src="/src/assets/app-assets/images/logo/logo-sm.png"></RouterLink>
+              <RouterLink :to="{name: 'dashboard'}" class="navbar-brand"><img class="brand-logo d-none d-md-block" src="/src/assets/app-assets/images/logo/logo.png"></RouterLink>
             </li>
             <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="la la-ellipsis-v">   </i></a></li>
           </ul>
