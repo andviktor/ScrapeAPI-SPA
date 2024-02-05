@@ -51,12 +51,12 @@ export default {
 <template>
     <div class="content-header row">
         <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
-        <h3 class="content-header-title mb-0 d-inline-block">{{ items_title }}</h3>
-        <div class="row breadcrumbs-top d-inline-block">
-            <div class="breadcrumb-wrapper col-12">
-                <BreadCrumbs :links="breadcrumbs" />
+            <h3 class="content-header-title mb-0 d-inline-block">{{ items_title }}</h3>
+            <div class="row breadcrumbs-top d-inline-block">
+                <div class="breadcrumb-wrapper col-12">
+                    <BreadCrumbs :links="breadcrumbs" />
+                </div>
             </div>
-        </div>
         </div>
         <div class="content-header-right col-md-4 col-12 d-none d-md-inline-block">
         <div class="btn-group float-md-right">

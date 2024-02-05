@@ -126,7 +126,7 @@ export default {
                         <div class="card-content">                    
                             <div class="card-body p-3">
                                 <p class="text-center h5 text-capitalize">Create new account</p>
-                                <p class="mb-1 text-center">Please enter your login details</p>
+                                <p class="mb-1 text-center">Please enter new account details</p>
                                 <form @submit.prevent="register_submit" class="form-horizontal form-signin">                            
                                     <fieldset class="form-label-group">
                                         <input v-model="register_username" type="text" class="form-control" id="register-user-name" placeholder="Your Username">
